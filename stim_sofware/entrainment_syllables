@@ -1,0 +1,268 @@
+import csv
+import random
+import time
+from psychopy import visual, core, event
+import psychopy.parallel as parallel # Module for parallel port communication
+
+sendEEG  = False
+
+# set parallel port address and set all bits to zero
+if sendEEG:
+    parallel.setPortAddress(0x4FF8)
+    parallel.setData(0)
+
+# Function to read syllables and trigger info from a CSV file
+def read_syllables_from_csv(filename):
+    syllables_info = []
+    with open(filename, newline='') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            syllables_info.append(row)
+    return syllables_info
+
+# Function to log events
+def log_event(logfile, infos, response='', correct=None):
+    print('hallo')
+    print(infos)
+    fieldnames = ['timestamp', 'syllable', 'sp', 'type', 'order', 'sequence', 'correct', 'group', 'response', 'is_correct']
+    for info in infos:
+        print(info)
+        row = {
+            'timestamp': info.get('timestamp', 'N/A'),
+            'syllable': info.get('syllable', 'N/A'),
+            'sp': info.get('sp', 'N/A'),
+            'type': info.get('type', 'N/A'),
+            'order': info.get('order', 'N/A'),
+            'sequence': info.get('sequence', 'N/A'),
+            'correct': info.get('correct', 'N/A'),
+            'group': info.get('group', 'N/A'),
+            'response': response,
+            'is_correct': correct
+        }
+        with open(logfile, mode='a', newline='') as file:
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writerow(row)
+
+# Setup the window
+win = visual.Window(size=[1920, 1080], color=[0.2, 0.2, 0.2], fullscr=True, checkTiming=True, units='pix')  # Dark gray background
+win.mouseVisible = False  # Hide mouse cursor
+
+# Read syllables and trigger info from CSV
+practice_syllables_info = read_syllables_from_csv('practice.csv')
+syllables_info = read_syllables_from_csv('syllables.csv')
+
+# Create text stimulus for syllables and instructions
+syllable_stim = visual.TextStim(win, text='', color='white', height=50, anchorHoriz='left', alignText='left')  # Larger, more readable text
+instruction_stim = visual.TextStim(win, text='', color='white', pos=(0, 0), height=30)  # Larger, readable text for instructions
+feedback_stim = visual.TextStim(win, text='', color='white', pos=(0, -200), height=30)  # Larger, readable feedback text
+task_stim = visual.TextStim(win, text='', color='white', pos=(0, -100), height=50)  # Task centered but lowered
+
+# Log file setup
+logfile = 'experiment_log.csv'
+
+# Initialize log file
+fieldnames = ['timestamp', 'syllable', 'sp', 'type', 'order', 'sequence', 'correct', 'group', 'response', 'is_correct']
+with open(logfile, mode='w', newline='') as file:
+    writer = csv.DictWriter(file, fieldnames=fieldnames)
+    writer.writeheader()
+
+# Function to get participant number
+def get_participant_number():
+    instruction_stim.text = "Please type your participant number and press Enter (or press 'Y' to exit):"
+    instruction_stim.draw()
+    win.flip()
+
+    participant_id_keys = event.waitKeys(keyList=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'return', 'y'], clearEvents=False)
+
+    participant_id = ''
+    while 'return' not in participant_id_keys:
+        for key in participant_id_keys:
+            if key == 'y':
+                core.quit()
+            if key != 'return':
+                participant_id += key
+        instruction_stim.text = f"Please type your participant number and press Enter (or press 'Y' to exit):\n{participant_id}"
+        instruction_stim.draw()
+        win.flip()
+        participant_id_keys = event.waitKeys(keyList=['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'return', 'y'], clearEvents=False)
+
+    return int(participant_id)
+
+# Routine to show instructions
+def show_instructions(participant_id):
+    if participant_id % 2 == 0:
+        instruction_text = (
+            "Benvenut*!\n\n"
+            "Presta attenzione a quello che vedrai sullo schermo. "
+            "Ti verrà chiesto se hai visto una specifica coppia di sillabe.\n\n"
+            "Premi 'M' per SI e 'Z' per NO.\n\n"
+            "Premi qualsiasi tasto per iniziare (Y per uscire)"
+        )
+    else:
+        instruction_text = (
+            "Benvenut*!\n\n"
+            "Presta attenzione a quello che vedrai sullo schermo. "
+            "Ti verrà chiesto se hai visto una specifica coppia di sillabe.\n\n"
+            "Premi 'Z' per SI e 'M' per NO.\n\n"
+            "Premi qualsiasi tasto per iniziare (o Y per uscire)"
+        )
+    instruction_stim.text = instruction_text
+    instruction_stim.draw()
+    win.flip()
+    keys = event.waitKeys()
+    if 'y' in keys:
+        core.quit()
+
+
+# Routine to show the task after each group with feedback and progress
+def show_task(syllables_seen, progress, participant_id):
+    # Counterbalanced keys for instructions
+    if participant_id % 2 == 0:
+        yes_key = 'm'
+        no_key = 'z'
+    else:
+        yes_key = 'z'
+        no_key = 'm'
+
+    # Select a random pair of consecutive syllables from the seen syllables
+    selected_pair = ('', '')
+    sequence_pairs = [(syllables_seen[i], syllables_seen[i+1]) for i in range(len(syllables_seen)-1)]
+
+    if random.random() < 0.5 and sequence_pairs:
+        selected_pair = random.choice(sequence_pairs)
+        task_stim.text = f"Hai visto questa coppia?\n\n{selected_pair[0]} - {selected_pair[1]}\n\nPremi '{yes_key.upper()}' per SI o '{no_key.upper()}' per NO"
+    else:
+        all_syllables = list(set(syllables_seen))
+        random.shuffle(all_syllables)
+        if len(all_syllables) > 1:
+            fake_pair = (all_syllables[0], all_syllables[1])
+            task_stim.text = f"Hai visto questa coppia?\n\n{fake_pair[0]} - {fake_pair[1]}\n\nPremi '{yes_key.upper()}' per SI o '{no_key.upper()}' per NO"
+            selected_pair = fake_pair
+        else:
+            task_stim.text = "Premi qualsiasi tasto per continuare... (not enough syllables seen to create a pair)"
+
+    task_stim.draw()
+    win.flip()
+    keys = event.waitKeys(keyList=['m', 'z', 'y'])
+    if 'y' in keys:
+        core.quit()
+
+    # Determine if response was correct
+    response = keys[0]
+    correct = None
+    if sequence_pairs and selected_pair in sequence_pairs:
+        correct = response == yes_key
+    elif selected_pair not in sequence_pairs:
+        correct = response == no_key
+
+    feedback_text = "Corretto!" if correct else "Sbagliato!"
+    log_event(logfile, {'syllable': selected_pair[0]}, time.time(), response, correct=correct)
+
+
+    # Show feedback and progress
+    feedback_stim.text = f"{feedback_text}\n\nProgress: {progress}% completato"
+    feedback_stim.draw()
+    win.flip()
+    core.wait(3)  # show the feedback for 3 seconds
+    
+# Avvia l'esperimento
+participant_id = get_participant_number()
+
+show_instructions(participant_id)
+
+# First, run the practice phase
+practice_groups = {}
+for syllable_info in practice_syllables_info:
+    #print("Practice info:", syllable_info)  # Debug print to see the content
+    group = syllable_info.get('group')
+    if group not in practice_groups:
+        practice_groups[group] = []
+    practice_groups[group].append(syllable_info)
+
+random_groups = list(practice_groups.keys())
+random.shuffle(random_groups)
+
+progress = 0
+total_groups = len(random_groups)
+
+def show_block(seq):
+    syllables_seen = []
+    progress = 0
+    # Trigger before the first syllable of the group
+    if sendEEG:
+        parallel.setData(5)  # Example trigger before the group
+    core.wait(0.008)
+    if sendEEG:
+        parallel.setData(0)
+    core.wait(1)  # Wait for 1 second
+    info = []
+    for syllable_info in seq:
+        syllables_seen.append(syllable_info.get('syllable', 'N/A'))
+        progress += 1
+        syllable_stim.text = syllable_info.get('syllable', 'N/A')
+        syllable_stim.draw()
+        win.flip()
+        syllable_info.update([('timestamp', time.time())])
+        info.append(syllable_info)
+        if sendEEG:
+            parallel.setData(1)
+        core.wait(0.008)
+        if sendEEG:
+            parallel.setData(0)
+        # Log event
+        # log_event(logfile, info, timestamp)
+        # Wait for 220 milliseconds
+        core.wait(0.207)
+        # Clear screen and wait for 100 milliseconds
+        win.flip()
+        core.wait(0.093)
+        
+    # Trigger after the last syllable of the group
+    log_event(logfile, info)
+    core.wait(1)  # Wait for 1 second
+    if sendEEG:
+        parallel.setData(6)  # Example trigger before the group
+    core.wait(0.008)
+    if sendEEG:
+        parallel.setData(0)
+    
+    percent_complete = (progress / total_groups) * 100
+    show_task(syllables_seen, progress=int(percent_complete), participant_id=participant_id)
+
+for group in random_groups:
+    sequence = practice_groups[group]
+    show_block(sequence)
+
+# Now, run the main experiment
+show_instructions(participant_id)  # Show instructions again before the main experiment
+
+groups = {}
+for syllable_info in syllables_info:
+    #print("Experiment info:", syllable_info)  # Debug print to see the content
+    group = syllable_info.get('group')
+    if group not in groups:
+        groups[group] = []
+    groups[group].append(syllable_info)
+
+random_groups = list(groups.keys())
+random.shuffle(random_groups)
+
+progress = 0
+total_groups = len(random_groups)
+
+for group in random_groups:
+    syllables_seen = []
+    for syllable_info in groups[group]:
+        present_syllable(syllable_info)
+        syllables_seen.append(syllable_info.get('syllable', 'N/A'))
+    progress += 1
+    percent_complete = (progress / total_groups) * 100
+    show_task(syllables_seen, progress=int(percent_complete), participant_id=participant_id)
+
+# End of experiment
+instruction_stim.text = "L'esperimento è terminato. Grazie per la tua partecipazione!"
+instruction_stim.draw()
+win.flip()
+event.waitKeys()
+win.close()
+core.quit()
