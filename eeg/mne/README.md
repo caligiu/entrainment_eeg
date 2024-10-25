@@ -1,8 +1,8 @@
-##  MNE
+#  MNE
 
 see [MNE](https://mne.tools/stable/index.html)
 
-Directory content:
+## Directory content:
 
 [info.md](info.md)  shor info about data nature and markers
 
