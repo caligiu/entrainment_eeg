@@ -21,21 +21,30 @@
 
 **Knowledge base**
 
+[Repahael Vallat Python Tutorial](https://raphaelvallat.com/bandpower.html)
+
+**EEGLAB**
 [EEGLAB wiki tutorial](https://eeglab.org/tutorials/ConceptsGuide/Time_frequency_tutorial.html)
 
 [EEGLAB plotting Tutorail](https://eeglab.org/tutorials/08_Plot_data/Plotting_Channel_Spectra_and_Maps.html)
 
-[Repahael Vallat Python Tutorial](https://raphaelvallat.com/bandpower.html)
 
-**mne**
+**MNE**
 
-[tutorial](https://mne.tools/dev/auto_tutorials/time-freq/10_spectrum_class.html)
+[tutorial psd](https://mne.tools/dev/auto_tutorials/time-freq/10_spectrum_class.html)
 
 *References:*
 
 - Peter D. Welch. The use of fast Fourier transform for the estimation of power spectra: A method based on time averaging over short, modified periodograms. IEEE Transactions on Audio and Electroacoustics, 15(2):70–73, 1967. [doi:10.1109/TAU.1967.1161901](doi:10.1109/TAU.1967.1161901).
 
 - David S. Slepian. Prolate spheroidal wave functions, fourier analysis, and uncertainty-V: the discrete case. Bell System Technical Journal, 57(5):1371–1430, 1978. [doi:10.1002/j.1538-7305.1978.tb02104.x](doi:10.1109/TAU.1967.1161901).
+
+
+[tutorial Steady State Responses](https://mne.tools/dev/auto_tutorials/time-freq/50_ssvep.html#sphx-glr-auto-tutorials-time-freq-50-ssvep-py)
+
+*References*
+
+s
 
 
 ###  Inter trial coherence 
