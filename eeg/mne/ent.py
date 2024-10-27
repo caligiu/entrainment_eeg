@@ -78,13 +78,13 @@ def get_ica(epochs, lp=1.0, hp=None, ncomp=32):
     ica.fit(filt_epo)
     return ica
 
-def plotCh(spect, ch, vlines = [1000/(6*234), 1000/(3*234), 1000/234]):
+def plotCh(spect, ch, scale='linear', vlines = [1000/(6*234), 1000/(3*234), 1000/234]):
     f,ax=plt.subplots()
-    ax.set_yscale('log')
-    d1 = spect['cop'].copy().pick(ch).get_data().transpose()
-    d2 = spect['mix'].copy().pick(ch).get_data().transpose()
-    d3 = spect['ccop'].copy().pick(ch).get_data().transpose()
-    d4 = spect['cmix'].copy().pick(ch).get_data().transpose()
+    ax.set_yscale(scale)
+    d1 = spect['cop'].copy().pick(ch).get_data().transpose()*1e12
+    d2 = spect['mix'].copy().pick(ch).get_data().transpose()*1e12
+    d3 = spect['ccop'].copy().pick(ch).get_data().transpose()*1e12
+    d4 = spect['cmix'].copy().pick(ch).get_data().transpose()*1e12
     ax.plot(spect['cop'].freqs, d1, color='black', label ='cop')
     ax.plot(spect['mix'].freqs, d2, color='green', label ='mix')
     ax.plot(spect['ccop'].freqs, d3, '--', linewidth=2, color='black', label ='ctrc')
@@ -92,7 +92,7 @@ def plotCh(spect, ch, vlines = [1000/(6*234), 1000/(3*234), 1000/234]):
     ax.legend()
     ax.set_title(ch)
     ax.set_xlabel('Freq [Hz]')
-    ax.set_ylabel('Power [AU]')
+    ax.set_ylabel('Power [uV^2/Hz]')
     for v in vlines:
         ax.axvline(v)
     

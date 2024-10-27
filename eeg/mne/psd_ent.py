@@ -6,7 +6,7 @@ import ent
 ##  single subject
 ##
 
-sj = 2
+sj = 3
 epo = mne.read_epochs(f'S{sj:02}-epo.fif')
 
 # display single trial psd:
@@ -16,7 +16,7 @@ epo = mne.read_epochs(f'S{sj:02}-epo.fif')
 
 # parameters for multitapering
 bw = 0.1
-fm = 0.05
+fm = 0.5
 fM = 6
 
 spect=dict()
@@ -46,8 +46,68 @@ for ch in epo.ch_names:
 pp.close()
 
 
-#compute ssr  (not working ...)
+tmin = 0.0
+tmax = 18.2
+fmin = 0.5
+fmax = 6.0
+sfreq = epo.info["sfreq"]
 
-spectrum = epo.compute_psd(method='multitaper', bandwidth=0.1,fmin=0.1, fmax=6)
-psds, freqs = spectrum.get_data(return_freqs=True)
-snrs = ent.snr_spectrum(psds, noise_n_neighbor_freqs=3, noise_skip_neighbor_freqs=1)
+spect=dict()
+spect["cop"] = epo["type=='cop'"].average().compute_psd(
+        "welch",
+    n_fft=int(sfreq * (tmax - tmin)),
+    n_overlap=0,
+    n_per_seg=None,
+    tmin=tmin,
+    tmax=tmax,
+    fmin=fmin,
+    fmax=fmax,
+    window="boxcar",
+    verbose=False,    
+)
+spect["mix"] = epo["type=='mix'"].average().compute_psd(
+        "welch",
+    n_fft=int(sfreq * (tmax - tmin)),
+    n_overlap=0,
+    n_per_seg=None,
+    tmin=tmin,
+    tmax=tmax,
+    fmin=fmin,
+    fmax=fmax,
+    window="boxcar",
+    verbose=False,    
+)
+
+spect["ccop"] = epo["type=='ctr_cop'"].average().compute_psd(
+        "welch",
+    n_fft=int(sfreq * (tmax - tmin)),
+    n_overlap=0,
+    n_per_seg=None,
+    tmin=tmin,
+    tmax=tmax,
+    fmin=fmin,
+    fmax=fmax,
+    window="boxcar",
+    verbose=False,    
+)
+
+spect["cmix"] = epo["type=='ctr_mix'"].average().compute_psd(
+        "welch",
+    n_fft=int(sfreq * (tmax - tmin)),
+    n_overlap=0,
+    n_per_seg=None,
+    tmin=tmin,
+    tmax=tmax,
+    fmin=fmin,
+    fmax=fmax,
+    window="boxcar",
+    verbose=False,    
+)
+
+
+pp = PdfPages(f'Subject{sj}_SpectraFFT.pdf')
+for ch in epo.ch_names:
+    f = ent.plotCh(spect,ch)
+    pp.savefig(f)
+
+pp.close()

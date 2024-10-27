@@ -1,6 +1,11 @@
 import ent
 
-sj = 4
+sj = 3
+
+# check soa consistency
+
+ent.check_soa(sj)
+
 # load subject 2 and give a look
 e = ent.get_epo(ent.get_raw(sj))
 e.plot() 
