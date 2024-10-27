@@ -11,9 +11,13 @@
 **Other (possibly relevant) papers:**
 
 [Buiatti et al., 2009](https://www.sciencedirect.com/science/article/abs/pii/S1053811908009981?via%3Dihub)
+
 [Buiatti et al., 2019](https://www.pnas.org/doi/full/10.1073/pnas.1812419116)
+
 [Kabdebon et al., 2015](https://www.sciencedirect.com/science/article/abs/pii/S0093934X15000565?via%3Dihub)
+
 [Nozadaran et al. 2016](https://www.nature.com/articles/srep20612)
+
 [Nozadaran et al. 2018](https://www.pnas.org/doi/full/10.1073/pnas.1801421115)
 
 
@@ -24,6 +28,7 @@
 [Repahael Vallat Python Tutorial](https://raphaelvallat.com/bandpower.html)
 
 **EEGLAB**
+
 [EEGLAB wiki tutorial](https://eeglab.org/tutorials/ConceptsGuide/Time_frequency_tutorial.html)
 
 [EEGLAB plotting Tutorail](https://eeglab.org/tutorials/08_Plot_data/Plotting_Channel_Spectra_and_Maps.html)
