@@ -1,6 +1,6 @@
 #  MNE
 
-see [MNE](https://mne.tools/stable/index.html)
+see [MNE](https://mne.tools/stable/index.html) (using version 1.8.0)
 
 ## Directory content:
 
