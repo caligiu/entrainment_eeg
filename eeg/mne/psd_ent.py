@@ -6,7 +6,7 @@ import ent
 ##  single subject
 ##
 
-sj = 3
+sj = 5
 epo = mne.read_epochs(f'S{sj:02}-epo.fif')
 
 # display single trial psd:

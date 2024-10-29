@@ -2,3 +2,4 @@ sj, ch_bad, epo_bad, ica_exl, comments
 002, "Cz, FC2", "452", "1",
 003, , , "0", "lot of blinks, muscle activity at trial beginning"
 004, , , , "amplification problems: jumps at O2 but also other sites, subject rejected"
+005, , "1040, 1930, 2596", , only 3 blinks ica not run

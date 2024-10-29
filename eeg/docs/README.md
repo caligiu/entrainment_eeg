@@ -49,11 +49,15 @@
 
 *References*
 
-s
-
 
 ###  Inter trial coherence 
- 
+
+*References:*
+
+Van Diepen, R. M., & Mazaheri, A. (2018). The caveats of observing inter-trial 
+phase-coherence in cognitive neuroscience. Scientific reports, 8(1), 2990.
+[https://doi.org/10.1038/s41598-018-20423-z](https://doi.org/10.1038/s41598-018-20423-z)
+
 ###  Other tools and perespectives
 
 **Libraries on EEG spectrum estimates**

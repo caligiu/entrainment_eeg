@@ -1,6 +1,6 @@
 import ent
 
-sj = 3
+sj = 5
 
 # check soa consistency
 
