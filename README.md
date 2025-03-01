@@ -5,3 +5,5 @@ see [stim_software](stim_software/)
 see [eeg/docs](eeg/docs/README.md)
 
 see [eeg/mne](eeg/mne/)
+
+see [HSP_2025] (human_sentence_processing_2025_abstract_poster)
