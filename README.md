@@ -6,4 +6,4 @@ see [eeg/docs](eeg/docs/README.md)
 
 see [eeg/mne](eeg/mne/)
 
-see [HSP_2025] (human_sentence_processing_2025_abstract_poster)
+see [HSP_2025] (HSP_2025/)
