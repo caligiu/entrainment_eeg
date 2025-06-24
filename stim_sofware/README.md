@@ -43,16 +43,27 @@ The experiment supports EEG synchronization through parallel port triggers.
 
 # File Structure
 ├── blocks/
+
 │   ├── b*.csv           # Experimental blocks
+
 │   ├── p*.csv           # Practice blocks
+
 │   ├── listA.txt        # Experimental block sequence for group A
+
 │   ├── listB.txt        # For group B
+
 │   ├── listC.txt        # For group C
+
 │   ├── listD.txt        # For group D
+
 │   └── pract.txt        # Practice block sequence
+
 ├── logs/
+
 │   └── sjXXX.csv        # Participant data log (auto-generated)
+
 ├── main_experiment.py   # Main PsychoPy script
+
 └── README.md            # This file
 
 # How to Run
