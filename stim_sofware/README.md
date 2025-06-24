@@ -44,10 +44,6 @@ The experiment supports EEG synchronization through parallel port triggers.
 # File Structure
 ├── blocks/
 
-│   ├── b*.csv           # Experimental blocks
-
-│   ├── p*.csv           # Practice blocks
-
 │   ├── listA.txt        # Experimental block sequence for group A
 
 │   ├── listB.txt        # For group B
