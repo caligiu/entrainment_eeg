@@ -83,13 +83,13 @@ Supports EEG synchronization through parallel port triggers.
 
 ```
 stim_software/
-â”œâ”€â”€ blocks/
-â”‚   â”œâ”€â”€ listA.txt ... listD.txt     # Block orders per group
-â”‚   â””â”€â”€ pract.txt                   # Practice block order
-â”œâ”€â”€ logs/
-â”‚   â””â”€â”€ sjXXX.csv                   # Participant data logs (auto-generated)
-â”œâ”€â”€ main_experiment.py             # PsychoPy experiment script
-â””â”€â”€ README.md                      # This description
+ blocks/
+ listA.txt ... listD.txt     # Block orders per group
+ pract.txt                   # Practice block order
+ logs/
+ sjXXX.csv                   # Participant data logs (auto-generated)
+ main_experiment.py             # PsychoPy experiment script
+ README.md                      # This description
 ```
 
 ### Running the Experiment
