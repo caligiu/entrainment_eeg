@@ -154,3 +154,9 @@ This project is licensed under the **GNU General Public License v3.0**.
 You are free to copy, modify, and distribute this software under the terms of the GPL.
 
 For the full text of the license, see [LICENSE](https://www.gnu.org/licenses/gpl-3.0.en.html) or the LICENSE file included in this repository.
+
+##  Credits
+
+This work has been done at the Depatment of Devepomental Psychology and Socialization of the University of Padua. It part of the the research project REPLAI (Repetition Experiments as Probes on Linguistics Analysis and Integration) funded within the MIUR PRIN-2022 - 2022JT5N3J as a part of NextGenerationEU of the EU.
+
+[<img src="logo/logodpss.png" height="80">](https://www.dpss.unipd.it/)
