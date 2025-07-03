@@ -1,4 +1,4 @@
-# Entrainment EEG â€“ Sentence Rhythm Perception
+# Entrainment EEG Sentence Rhythm Perception
 
 This repository contains documentation, scripts, and stimulus material related to an EEG experiment investigating neural entrainment to rhythmic sentence structures.
 
@@ -12,12 +12,12 @@ The experiment aims to evaluate how the human brain synchronizes to structured v
 
 ```
 entrainment_eeg/
-â”œâ”€â”€ eeg/                  # EEG processing and documentation
-â”‚   â”œâ”€â”€ docs/             # Bibliography and analysis references
-â”‚   â””â”€â”€ mne/              # Python-based analysis (MNE 1.8.0)
-â”œâ”€â”€ stim_software/        # Sentence block generator and PsychoPy experiment
-â”œâ”€â”€ HSP_2025/             # Additional project-related material
-â””â”€â”€ README.md             # This file
+eeg/                  # EEG processing and documentation
+ docs/             # Bibliography and analysis references
+ mne/              # Python-based analysis (MNE 1.8.0)
+stim_software/        # Sentence block generator and PsychoPy experiment
+HSP_2025/             # Additional project-related material
+README.md             # This file
 ```
 
 ## EEG Analysis
