@@ -160,3 +160,6 @@ For the full text of the license, see [LICENSE](https://www.gnu.org/licenses/gpl
 This work has been done at the Depatment of Devepomental Psychology and Socialization of the University of Padua. It part of the the research project REPLAI (Repetition Experiments as Probes on Linguistics Analysis and Integration) funded within the MIUR PRIN-2022 - 2022JT5N3J as a part of NextGenerationEU of the EU.
 
 [<img src="logo/logodpss.png" height="80">](https://www.dpss.unipd.it/)
+[<img src="logo/logounipd.png" height="80">](https://www.unipd.it/)
+[<img src="logo/MUR.png" height="80">](https://www.mur.gov.it/it))
+[<img src="logo/nextgeneu_en.jpg" height="80">](https://next-generation-eu.europa.eu/index_en)
